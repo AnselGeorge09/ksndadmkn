@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      axios.post('/login', { username, password })
+        .then(response => {
+          if (response.data === "admin") {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "regular.html";
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Login Page</h1>
+    <form>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <button onclick="login()">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+</body>
+</html>

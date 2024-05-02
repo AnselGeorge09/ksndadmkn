@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#formsub">Contact</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Admin Dashboard</h1>
+    <ul id="messages"></ul>
+  </main>
+  <footer>
+    <p>&copy; 2023 Nursing Home</p>
+  </footer>
+  <script>
+    const messages = document.getElementById("messages");
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "contact.html", true);
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const data = xhr.responseText;
+        const messagesArray = data.split("\n");
+        messagesArray.forEach((message) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = message;
+          messages.appendChild(listItem);
+        });
+      }
+    };
+    xhr.send();
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign up</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Sign up</h1>
+    <form id="signup-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <button type="submit">Sign up</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2023 Nursing Home</p>
+  </footer>
+  <script>
+    const form = document.getElementById("signup-form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      checkUsernameAvailability(username, password);
+    });
+    
+    function checkUsernameAvailability(username, password) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "admin.html", true);
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const users = xhr.responseText.split("\n");
+          const usernameExists = users.some((user) => user.includes(`Username: ${username}`));
+          if (usernameExists) {
+            alert("Username already exists!");
+          } else {
+            createUser(username, password);
+          }
+        }
+      };
+      xhr.send();
+    }
+    
+    function createUser(username, password) {
+      const data = `Username: ${username}\nPassword: ${password}`;
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "admin.html", true);
+      xhr.setRequestHeader("Content-Type", "text/plain");
+      xhr.send(data);
+      alert("Sign up successful!");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Submissions</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Form Submissions</h1>
+    <ul id="submissions"></ul>
+  </main>
+  <footer>
+    <p>&copy; 2023 Nursing Home</p>
+  </footer>
+  <script>
+    const submissions = document.getElementById("submissions");
+    fetch('getSubmissions')
+    .then(response => response.text())
+    .then((data) => {
+      const submissionsArray = data.split("\n\n");
+      submissionsArray.forEach((submission) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = submission;
+        submissions.appendChild(listItem);
+      });
+    })
+    .catch((error) => {
+      alert(`Error loading submissions: ${error}`);
+    });
+  </script>
+</body>
+</html>
